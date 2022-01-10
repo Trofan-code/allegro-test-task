@@ -10,8 +10,7 @@ import lombok.*;
 @Setter
 
 
-
-public class GitHubLanguageRank {
+public class GithubLanguageRank {
     private String language;
     private int size;
 }

@@ -1,43 +1,36 @@
 package com.example.allegrotest.mapper;
 
-import com.example.allegrotest.dto.GitHubLanguageRank;
+import com.example.allegrotest.dto.GithubLanguageRank;
 import com.example.allegrotest.dto.GithubRepoEntry;
 import com.example.allegrotest.model.GithubRepo;
-import reactor.core.publisher.Flux;
+import reactor.util.function.Tuple2;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class GithubMapper {
 
-    public GithubRepoEntry toGithubRepoEntry(GithubRepo githubRepo){
+    public GithubRepoEntry toGithubRepoEntry(GithubRepo githubRepo) {
         return GithubRepoEntry.builder()
                 .name(githubRepo.getName())
                 .starsCount(githubRepo.getStarsCount())
                 .build();
     }
 
-    public GitHubLanguageRank toGithubLanguageRang(GithubRepo githubRepo){
-        return GitHubLanguageRank.builder()
+    public GithubLanguageRank toGithubLanguageRang(GithubRepo githubRepo) {
+        return GithubLanguageRank.builder()
                 .language(githubRepo.getLanguage())
                 .size(githubRepo.getSize())
                 .build();
     }
 
-
-
-
-    public  List<GithubRepoEntry> toGithubRepoEntry2(List<GithubRepo> allGithubRepositories) {
-        return allGithubRepositories.stream()
-                .map(x->toGithubRepoEntry(x)
-                        ).collect(Collectors.toList());
-
-    }
-    public  List<GitHubLanguageRank> toGithubLanguageRang2(List<GithubRepo> allGithubRepositories) {
-        return allGithubRepositories.stream()
-                .map(x->toGithubLanguageRang(x)
-                ).collect(Collectors.toList());
-
+    public Object toGithubLanguageRang2(Tuple2<String, List<GithubRepo>> allData) {
+        return GithubLanguageRank.builder()
+                .language(allData.getT1())
+                .size(allData.getT2().stream()
+                        .map(GithubRepo::getSize)
+                        .reduce(0, Integer::sum))
+                .build();
     }
 
 

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 public class GenericConfiguration {
     @Bean
-    public ServerGitClient serverWebClient(){
+    public ServerGitClient serverWebClient() {
         return new ServerGitClient();
     }
 }

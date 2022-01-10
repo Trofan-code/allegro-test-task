@@ -10,7 +10,6 @@ import lombok.*;
 @Setter
 
 
-
 public class GithubRepoEntry {
     private String name;
     @JsonProperty("stargazers_count")
